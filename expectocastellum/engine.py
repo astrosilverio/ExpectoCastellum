@@ -10,9 +10,15 @@ class Engine(object):
 
 	def __init__(self, name):
 		self.name = name
+		rooms.make_rooms_from_json(self.name)
+		things.make_things_from_json(self.name)
+		people.make_people_from_json(self.name)
 		self.player = rooms.Player()
 		self.death = rooms.Death()
 		self.start_location = ''
+		self.roomdict = rooms.phonebook
+		self.thingdict = things.objectlist
+		self.npcdict = people.npclist
 		
 	def new(self, type, **attrs):
 	
@@ -44,23 +50,25 @@ class Engine(object):
 		
 		with open(os.getcwd()+'/'+self.name+'/'+pathextend+'.json', 'w') as json_repo:
 			json.dump(existing, json_repo)
+			
+		return to_build
 		
 	def new_room(self, **attrs):
-		self.new('room',**attrs)
+		newroom = self.new('room',**attrs)
+		return newroom
 				
 	def new_thing(self, **attrs):
-		self.new('thing',**attrs)
+		newthing = self.new('thing',**attrs)
+		return newthing
 		
 	def new_npc(self, **attrs):
-		self.new('npc',**attrs)
+		newnpc = self.new('npc',**attrs)
+		return newnpc
 		
 	def play(self):
 		if self.start_location == '':
 			errors.no_start_location()
 		else:
-			rooms.make_rooms_from_json(self.name)
-			things.make_things_from_json(self.name)
-			people.make_people_from_json(self.name)
 			self.player.location = self.start_location
 			rooms.phonebook[self.player.location].look(self.player)
 			rooms_to_init = [room.name for room in rooms.phonebook.values() if room.stairrooms]

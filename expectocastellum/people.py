@@ -1,4 +1,5 @@
 import json
+import os
 
 class Person(object):
 
@@ -77,7 +78,7 @@ def make_people_from_json(gamename):
 	global npclist
 	npclist = {}
 	try:
-		people = json.load(open('../'+gamename+"/people.json"))
+		people = json.load(open(os.getcwd()+'/'+gamename+"/people.json"))
 		for name, person_data in people.iteritems():
 			npclist[name] = Person()
 			npclist[name].__dict__.update(person_data)

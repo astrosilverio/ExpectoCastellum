@@ -1,2 +1,4 @@
 *.pyc
 expectocastellum/new_game*
+expectocastellum/test*
+.gitignore~

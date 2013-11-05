@@ -1,4 +1,5 @@
 import json
+import os
 
 class Thing(object):
 
@@ -39,7 +40,7 @@ def make_things_from_json(gamename):
 	global objectlist
 	objectlist = {}
 	try:
-		things = json.load(open('../'+gamename+"/things.json"))
+		things = json.load(open(os.getcwd()+'/'+gamename+"/things.json"))
 		for name, thing_data in things.iteritems():
 			objectlist[name] = Thing()
 			objectlist[name].__dict__.update(thing_data)

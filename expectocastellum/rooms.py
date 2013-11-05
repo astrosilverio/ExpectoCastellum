@@ -247,7 +247,6 @@ def make_rooms_from_json(gamename):
 	phonebook = {}
 	try:
 		rooms = json.load(open(os.getcwd()+'/'+gamename+'/rooms.json'))
-		print 'rooms are ', rooms
 		for name, room_data in rooms.iteritems():
 			phonebook[name] = Room()
 			phonebook[name].__dict__.update(room_data)
