@@ -32,8 +32,11 @@ class Thing(object):
 		if self.containing is not []:
 			for thing in self.containing:
 				objectlist[thing].hidden = False
+				
+objectlist = {}
 
 def make_things_from_json(gamename):
+	global objectlist
 	objectlist = {}
 	try:
 		things = json.load(open('../'+gamename+"/things.json"))
@@ -42,9 +45,7 @@ def make_things_from_json(gamename):
 			objectlist[name].__dict__.update(thing_data)
 	except IOError:
 		pass
-	return objectlist
 
-# CHANGE NAME TO (NOT LIST)
 objectlist = make_things_from_json("example")
 
 

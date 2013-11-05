@@ -1,8 +1,9 @@
 from random import choice, randint
 from things import objectlist
-from people import npc
-import os
+from people import npclist
 import json
+import os
+
 
 quips = [	"""Too bad you're not a cat. GAME OVER.""",
 			"""You are dead. Sucks to be you."""]
@@ -151,13 +152,16 @@ class Room(Scene):
 		self.wrong_password = wrong_password
 		self.first_time = first_time
 		
-	def setprops(self, attrs):
+	def setprops(self, **attrs):
 		if attrs is not None:
 			for attrib, val in attrs.iteritems():
-				setattr(self, attrib, val)
+				setattr(self, attrib.lower(), val)
 		
 	def add_paths(self, paths):
 		self.paths.update(paths)
+		
+	def add_invent(self, things):
+		self.invent.extend(things)
 		
 	def add_people(self, people):
 		self.people.extend(people)
@@ -188,7 +192,7 @@ class Room(Scene):
 					output = output + thing
 				print output
 				for person in self.people:
-					print npc[person].description + '\n'
+					print npclist[person].description + '\n'
 
 	def look_darkly(self, player):
 		print self.description + '\n'
@@ -198,7 +202,7 @@ class Room(Scene):
 			for thing in self.invent:
 				print objectlist[thing].description
 			for person in self.people:
-				print npc[person].description
+				print npclist[person].description
 		else:
 			print "You can't see a thing. You might fall in a hole."
 			num = randint(0,1)
@@ -236,7 +240,10 @@ def mirror_paths():
 				phonebook[dest].add_paths({oppdir: room.name})
 #				print "mirroring " + dir + ',' + dest + ' with '+ oppdir + ',' + room.name
 
+phonebook = {}
+
 def make_rooms_from_json(gamename):
+	global phonebook
 	phonebook = {}
 	try:
 		rooms = json.load(open(os.getcwd()+'/'+gamename+'/rooms.json'))
@@ -246,8 +253,6 @@ def make_rooms_from_json(gamename):
 			phonebook[name].__dict__.update(room_data)
 	except:
 		raise
-	return phonebook
-	
-		
-phonebook = make_rooms_from_json("example")
 
+phonebook = make_rooms_from_json('example')
+	

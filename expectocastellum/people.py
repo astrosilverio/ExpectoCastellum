@@ -71,20 +71,20 @@ class Person(object):
 			print self.dialogue[self.count]
 			self.count += 1
 
+npclist = {}
 
-
-	
 def make_people_from_json(gamename):
-	npc = {}
+	global npclist
+	npclist = {}
 	try:
 		people = json.load(open('../'+gamename+"/people.json"))
 		for name, person_data in people.iteritems():
-			npc[name] = Person()
-			npc[name].__dict__.update(person_data)
+			npclist[name] = Person()
+			npclist[name].__dict__.update(person_data)
 	except IOError:
 		pass
-	return npc
 
-npc = make_people_from_json("example")
+npclist = make_people_from_json("example")
  
- 
+
+	
