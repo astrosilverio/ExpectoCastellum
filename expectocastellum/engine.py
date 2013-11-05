@@ -30,14 +30,16 @@ class Engine(object):
 		else:
 			errors.unknown_type_creation()
 			return
-		if not attrs or 'name' not in attrs.keys().lower():
+		if not attrs or 'name' not in attrs.keys():
 			to_build.name = errors.nameless_item(type.lower())
 			
 		to_build.setprops(**attrs)
 		
-		with open(os.getcwd()+'/'+self.name+'/'+pathextend+'.json') as json_repo:
-			existing = json.load(json_repo)
-			
+		try:
+			with open(os.getcwd()+'/'+self.name+'/'+pathextend+'.json') as json_repo:
+				existing = json.load(json_repo)
+		except IOError:
+			pass
 		existing[to_build.name] = { k : v for k,v in to_build.__dict__.iteritems() if v }
 		
 		with open(os.getcwd()+'/'+self.name+'/'+pathextend+'.json', 'w') as json_repo:
@@ -59,11 +61,11 @@ class Engine(object):
 			rooms.make_rooms_from_json(self.name)
 			things.make_things_from_json(self.name)
 			people.make_people_from_json(self.name)
-			you.location = self.start_location
-			rooms.phonebook[you.location].look(you)
-			rooms_to_init = [room.name for room in rooms.phonebook.iteritems() if room.stairrooms]
+			self.player.location = self.start_location
+			rooms.phonebook[self.player.location].look(self.player)
+			rooms_to_init = [room.name for room in rooms.phonebook.values() if room.stairrooms]
 			for room in rooms_to_init:
 				rooms.phonebook[room].shuffle_stairs()
-		while True:
-			user_input = raw_input("> ").lower()
-			next = thesaurus.process(user_input, you)
+			while True:
+				user_input = raw_input("> ").lower()
+				next = thesaurus.process(user_input, self.player)

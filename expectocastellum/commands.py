@@ -4,7 +4,7 @@ import json
 from rooms import phonebook, Player, Room
 from things import objectlist, Thing
 from quiz import sortingquiz
-from people import npc, Person
+from people import npclist, Person
 
 class Commands(object):
 

@@ -1,6 +1,6 @@
 from random import choice
 from things import objectlist
-from people import npc
+from people import npclist
 
 class Spells(object):
 

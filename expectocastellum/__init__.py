@@ -9,3 +9,6 @@ def game(name):
 	game_engine = engine.Engine(name)
 	return game_engine
 
+def load(name):
+	game_engine = engine.Engine(name)
+	return game_engine
