@@ -29,7 +29,6 @@ class Commands(object):
 		return player.look()
 		
 	def look(self, player):
-		print rooms.phonebook
 		return rooms.phonebook[player.location].look(player)
 		
 	def talk(self, person, player):
@@ -47,7 +46,7 @@ class Commands(object):
 	def quit(self, player):
 		save_or_not = raw_input("Leave without saving? (y/n)"  )
 		if save_or_not == 'y':
-			exit(0)
+			return 'break'
 		elif save_or_not == 'n':
 			self.save(player)
 		else:

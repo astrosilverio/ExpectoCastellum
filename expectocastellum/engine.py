@@ -110,3 +110,5 @@ class Engine(object):
 			while True:
 				user_input = raw_input("> ").lower()
 				next = thesaurus.process(user_input, self.player, self.name)
+				if next == 'break':
+					break

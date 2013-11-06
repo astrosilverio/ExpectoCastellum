@@ -54,8 +54,7 @@ def process(user_input, player, gamename):
 			return
 				
 	try:
-		print command, args
-		commands.__getattribute__(command)(*args)
+		return commands.__getattribute__(command)(*args)
 	except AttributeError:
 		print "What do you want me to do with %s?" % command
 #	except TypeError:
