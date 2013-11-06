@@ -1,6 +1,6 @@
 from random import choice, randint
-from things import objectlist
-from people import npclist
+import things
+import people
 import json
 import os
 
@@ -45,7 +45,7 @@ class Player(Scene):
 	def look(self):
 		print "You are carrying:"
 		for thing in self.invent:
-			print objectlist[thing].name
+			print things.objectlist[thing].name
 	
 	def info(self):
 		if self.name:
@@ -61,24 +61,24 @@ class Player(Scene):
 			self.invisible = False
 		
 	def take(self, thing):
-		if objectlist[thing].grabbable == True:
+		if things.objectlist[thing].grabbable == True:
 			phonebook[self.location].move(thing, self)
-			if objectlist[thing].hidden == True:
-				objectlist[thing].hidden = False
+			if things.objectlist[thing].hidden == True:
+				things.objectlist[thing].hidden = False
 			if thing == 'cloak':
 				self.invisible = True
 		else:
 			print "You can't take that."
 			
 	def eat(self, thing):
-		if objectlist[thing].edible == True:	
+		if things.objectlist[thing].edible == True:	
 			if thing in self.invent:
-				print objectlist[thing].taste
-				return self.move(thing, phonebook[objectlist[thing].home])
+				print things.objectlist[thing].taste
+				return self.move(thing, phonebook[things.objectlist[thing].home])
 			elif thing in phonebook[self.location].invent:
-				print objectlist[thing].taste
-				if self.location != objectlist[thing].home:
-					return phonebook[self.location].move(thing, phonebook[objectlist[thing].home])
+				print things.objectlist[thing].taste
+				if self.location != things.objectlist[thing].home:
+					return phonebook[self.location].move(thing, phonebook[things.objectlist[thing].home])
 				else:
 					pass
 			else:
@@ -188,12 +188,12 @@ class Room(Scene):
 			if proceed == True:
 				print player.location +'\n'
 				output = self.description + '\n\n'
-				stuff_to_print = [objectlist[thing].description+'\n' for thing in self.invent if objectlist[thing].hidden == False]
+				stuff_to_print = [things.objectlist[thing].description+'\n' for thing in self.invent if things.objectlist[thing].hidden == False]
 				for thing in stuff_to_print:
 					output = output + thing
 				print output
 				for person in self.people:
-					print npclist[person].description + '\n'
+					print people.npclist[person].description + '\n'
 
 	def look_darkly(self, player):
 		print self.description + '\n'
@@ -201,9 +201,9 @@ class Room(Scene):
 		if player.light == True:
 			print "You can see by the faint blue light of your wand."
 			for thing in self.invent:
-				print objectlist[thing].description
+				print things.objectlist[thing].description
 			for person in self.people:
-				print npclist[person].description
+				print people.npclist[person].description
 		else:
 			print "You can't see a thing. You might fall in a hole."
 			num = randint(0,1)

@@ -19,6 +19,7 @@ class Engine(object):
 		self.roomdict = rooms.phonebook
 		self.thingdict = things.objectlist
 		self.npcdict = people.npclist
+		self.mirror_paths = True
 		
 	def new(self, type, **attrs):
 	
@@ -52,6 +53,8 @@ class Engine(object):
 			to_build = rooms.Room()
 			pathextend = 'rooms'
 			dictname = self.roomdict
+			if self.mirror_paths:
+				rooms.mirror_paths()
 		elif type.lower() == 'thing':
 			to_build = things.Thing()
 			pathextend = 'things'
