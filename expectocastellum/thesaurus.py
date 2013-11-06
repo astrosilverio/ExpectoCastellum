@@ -15,7 +15,10 @@ noncanonicals = {'north': 'n', 'south': 's', 'west': 'w', 'east': 'e', 'northwes
 			'nimbus': 'broom', 'erised': 'mirror', 'cup': 'tea', 'tree': 'willow', 'whizbees': 'candy', 'skeleton': 'bones', 'toad': 'trevor', 'paper': 'scrap of paper', 'scrap': 'scrap of paper', 'jar': 'spider', "candles": "candle", "tapestries": "tapestry",
 			'patronum': 'patronus', 'avada': 'avada_kedavra'}
 
-def process(user_input, player):
+def process(user_input, player, gamename):
+
+	commands.name = gamename
+	commands.makemap()
 	
 	if user_input.count('s') >= 11:
 		command = 'speak_parseltongue'
@@ -51,12 +54,12 @@ def process(user_input, player):
 			return
 				
 	try:
-#		print command, args
+		print command, args
 		commands.__getattribute__(command)(*args)
 	except AttributeError:
 		print "What do you want me to do with %s?" % command
-	except TypeError:
-		print "What do you want to me to %s?" % command
+#	except TypeError:
+#		print "What do you want to me to %s?" % command
 	
 				
 

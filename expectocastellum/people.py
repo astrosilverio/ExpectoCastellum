@@ -72,8 +72,6 @@ class Person(object):
 			print self.dialogue[self.count]
 			self.count += 1
 
-npclist = {}
-
 def make_people_from_json(gamename):
 	global npclist
 	npclist = {}
@@ -85,7 +83,7 @@ def make_people_from_json(gamename):
 	except IOError:
 		pass
 
-npclist = make_people_from_json("example")
+make_people_from_json("example")
  
 
 	

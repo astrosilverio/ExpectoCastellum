@@ -34,8 +34,6 @@ class Thing(object):
 			for thing in self.containing:
 				objectlist[thing].hidden = False
 				
-objectlist = {}
-
 def make_things_from_json(gamename):
 	global objectlist
 	objectlist = {}
@@ -47,7 +45,7 @@ def make_things_from_json(gamename):
 	except IOError:
 		pass
 
-objectlist = make_things_from_json("example")
+make_things_from_json("example")
 
 
 

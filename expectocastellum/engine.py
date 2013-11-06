@@ -76,4 +76,4 @@ class Engine(object):
 				rooms.phonebook[room].shuffle_stairs()
 			while True:
 				user_input = raw_input("> ").lower()
-				next = thesaurus.process(user_input, self.player)
+				next = thesaurus.process(user_input, self.player, self.name)

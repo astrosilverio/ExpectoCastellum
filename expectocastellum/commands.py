@@ -1,12 +1,20 @@
 import help
 import spells
 import json
-from rooms import phonebook, Player, Room
-from things import objectlist, Thing
+import rooms
+import things
 from quiz import sortingquiz
-from people import npclist, Person
+import people
 
 class Commands(object):
+
+	def __init__(self, name=None):
+		self.name = name
+		
+	def makemap(self):
+		rooms.make_rooms_from_json(self.name)
+		things.make_things_from_json(self.name)
+		people.make_people_from_json(self.name)
 
 	def go(self, direction, player):
 		return player.go(direction)
@@ -21,11 +29,12 @@ class Commands(object):
 		return player.look()
 		
 	def look(self, player):
-		return phonebook[player.location].look(player)
+		print rooms.phonebook
+		return rooms.phonebook[player.location].look(player)
 		
 	def talk(self, person, player):
-		if person in phonebook[player.location].people:
-			return npc[person].talk(player, phonebook[player.location])
+		if person in rooms.phonebook[player.location].people:
+			return people.npclist[person].talk(player, rooms.phonebook[player.location])
 		else:
 			print "I don't see %s here." % person.capitalize()
 	
@@ -59,11 +68,11 @@ class Commands(object):
 			thing_states = {}
 			npc_states = {}
 			player_states[player.name] = {k:v for k,v in player.__dict__.iteritems() if v}
-			for name, room in phonebook.iteritems():
+			for name, room in rooms.phonebook.iteritems():
 				room_states[name] = {k:v for k,v in room.__dict__.iteritems() if v}
-			for name, thing in objectlist.iteritems():
+			for name, thing in things.objectlist.iteritems():
 				thing_states[name] = {k:v for k,v in thing.__dict__.iteritems() if v}
-			for name, person in npc.iteritems():
+			for name, person in people.npclist.iteritems():
 				npc_states[name] = {k:v for k,v in person.__dict__.iteritems() if v}
 			states = [player_states, room_states, thing_states, npc_states]
 			json.dump(states, save_game)
@@ -73,11 +82,11 @@ class Commands(object):
 			save_game = open(player.name.lower()+"_save.json", 'w')
 			save_game.truncate
 			player_states[player.name] = {k:v for k,v in player.__dict__.iteritems() if k}
-			for name, room in phonebook.iteritems():
+			for name, room in rooms.phonebook.iteritems():
 				room_states[name] = {k:v for k,v in room.__dict__.iteritems() if k}
-			for name, thing in objectlist.iteritems():
+			for name, thing in things.objectlist.iteritems():
 				thing_states[name] = {k:v for k,v in thing.__dict__.iteritems() if k}
-			for name, person in npc.iteritems():
+			for name, person in people.npclist.iteritems():
 				npc_states[name] = {k:v for k,v in person.__dict__.iteritems() if k}
 			states = [player_states, room_states, thing_states, npc_states]
 			json.dump(states, save_game)
@@ -95,21 +104,21 @@ class Commands(object):
 		for att, player_data in player_states.iteritems():
 			player.__dict__.update(player_data)
 		for name, room_data in room_states.iteritems():
-			phonebook[name] = Room()
-			phonebook[name].__dict__.update(room_data)
+			rooms.phonebook[name] = rooms.Room()
+			rooms.phonebook[name].__dict__.update(room_data)
 		for name, thing_data in thing_states.iteritems():
-			objectlist[name] = Thing()
-			objectlist[name].__dict__.update(thing_data)
+			things.objectlist[name] = things.Thing()
+			things.objectlist[name].__dict__.update(thing_data)
 		for name, npc_data in npc_states.iteritems():
-			npc[name] = Person()
-			npc[name].__dict__.update(npc_data)
+			people.npclist[name] = people.Person()
+			people.npclsit[name].__dict__.update(npc_data)
 
 	
 	def speak_parseltongue(self, player):
 		if player.location == "Myrtle's Bathroom":
 			print "The sinks creakily move upward and outward, and the floor tile swings up to reveal a dark chute."
-			phonebook["Myrtle's Bathroom"].description = phonebook["Myrtle's Bathroom"].description + "\nThe sink circle has opened to reveal a dark chute."
-			phonebook["Myrtle's Bathroom"].add_paths({'d': phonebook["Chute"]})
+			rooms.phonebook["Myrtle's Bathroom"].description = rooms.phonebook["Myrtle's Bathroom"].description + "\nThe sink circle has opened to reveal a dark chute."
+			rooms.phonebook["Myrtle's Bathroom"].add_paths({'d': rooms.phonebook["Chute"]})
 		if player.location == "Slytherin Common Room":
 			print "The eyes on the many carved snake decorations glow green."
 		else:
@@ -122,20 +131,20 @@ class Commands(object):
 		player.drop(thing)
 	
 	def take(self, thing, player):
-		if thing not in objectlist:
+		if thing not in things.objectlist:
 			print "You can't take %s!" % thing
 			return			
 		player.take(thing)
 	
 	def eat(self, thing, player):
-		if thing not in objectlist:
+		if thing not in things.objectlist:
 			print "You can't eat %s!" % thing
 			return
 		player.eat(thing)
 		
 	def cast(self, incantation, player):
 		if "wand" in player.invent:
-			spellbook = spells.Spells(player, phonebook[player.location])
+			spellbook = spells.Spells(player, rooms.phonebook[player.location])
 			spell = getattr(spellbook, incantation)
 			spell()
 		else:
@@ -153,7 +162,7 @@ class Commands(object):
 			temp = set()
 			for chamber in linked:
 				tempstrings = chamber.paths.values()
-				tempobjects = [phonebook[string] for string in tempstrings]
+				tempobjects = [rooms.phonebook[string] for string in tempstrings]
 				temp.update(tempobjects)
 			linked = linked.union(temp)
 			for chamber in linked:
@@ -163,16 +172,16 @@ class Commands(object):
 		return dist, location			
 
 	def accio(self, thing, player):
-		if thing not in objectlist:
+		if thing not in things.objectlist:
 			print "You can't accio %s!" % thing
 			return
 	
 		if 'wand' in player.invent:
-			if objectlist[thing].grabbable == True:
+			if things.objectlist[thing].grabbable == True:
 				if thing in player.invent:
 					print "You already have that!"
 				else:
-					dist, thing_location = self.find_distance(phonebook[player.location], thing, 4)
+					dist, thing_location = self.find_distance(rooms.phonebook[player.location], thing, 4)
 					if dist <= 3:
 						print "The %s flies toward you alarmingly quickly." % thing
 						return thing_location.move(thing, player)
@@ -185,20 +194,20 @@ class Commands(object):
 
 
 	def x(self, thing, player):
-		if thing in player.invent or thing in phonebook[player.location].invent:
-			if objectlist[thing].hidden == True and objectlist[thing].home == player.location:
-				objectlist[thing].examine_special()
+		if thing in player.invent or thing in rooms.phonebook[player.location].invent:
+			if things.objectlist[thing].hidden == True and things.objectlist[thing].home == player.location:
+				things.objectlist[thing].examine_special()
 			else:
-				objectlist[thing].examine()
+				things.objectlist[thing].examine()
 			if thing == 'hat':
-				dist, location = self.find_distance(phonebook[player.location], 'sword', 50)
+				dist, location = self.find_distance(rooms.phonebook[player.location], 'sword', 50)
 				if location == None and'sword' not in player.invent:
 					if player.house == 'Lion':
 						print "A silver sword falls out of the hat. Congratulations! You are a true Gryffindor!"
-						phonebook[player.location].add_invent('sword')
+						rooms.phonebook[player.location].add_invent('sword')
 					elif player.location == "Gryffindor":
 						print "A silver sword falls out of the hat. The Sorting Hat cannot tell the difference between someone in Gryffindor House and someone in Gryffindor Common Room."
-						phonebook[player.location].add_invent('sword')
+						rooms.phonebook[player.location].add_invent('sword')
 				else:
 					return
 		else:

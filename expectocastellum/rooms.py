@@ -240,8 +240,6 @@ def mirror_paths():
 				phonebook[dest].add_paths({oppdir: room.name})
 #				print "mirroring " + dir + ',' + dest + ' with '+ oppdir + ',' + room.name
 
-phonebook = {}
-
 def make_rooms_from_json(gamename):
 	global phonebook
 	phonebook = {}
@@ -253,5 +251,5 @@ def make_rooms_from_json(gamename):
 	except:
 		raise
 
-phonebook = make_rooms_from_json('example')
+make_rooms_from_json('example')
 	
