@@ -66,6 +66,9 @@ class Engine(object):
 		return newnpc
 		
 	def play(self):
+		start_location = [room.name for room in rooms.phonebook.values() if room.start_location]
+		if len(start_location) > 1:
+			errors.too_many_start_locations()
 		if self.start_location == '':
 			errors.no_start_location()
 		else:

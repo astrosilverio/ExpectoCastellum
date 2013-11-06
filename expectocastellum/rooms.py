@@ -138,7 +138,7 @@ class Death(object):
 
 class Room(Scene):
 
-	def __init__(self, name=None, description=None, dark=False, dark_wakeup=None, stairrooms=None, password_prompt=None, password=None, wrong_password=None, first_time=None):
+	def __init__(self, name=None, description=None, dark=False, dark_wakeup=None, stairrooms=None, password_prompt=None, password=None, wrong_password=None, first_time=None, start_location=False):
 		self.name = name
 		self.description = description
 		self.paths = {}
@@ -151,6 +151,7 @@ class Room(Scene):
 		self.password = password
 		self.wrong_password = wrong_password
 		self.first_time = first_time
+		self.start_location = start_location
 		
 	def setprops(self, **attrs):
 		if attrs is not None:
