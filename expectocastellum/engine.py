@@ -57,7 +57,7 @@ class Engine(object):
 			dictname = self.roomdict
 		elif type.lower() == 'thing':
 			dictname = self.thingdict
-		elif type.lower() == 'npc'
+		elif type.lower() == 'npc':
 			dictname = self.npcdict
 		else:
 			errors.unknown_type()

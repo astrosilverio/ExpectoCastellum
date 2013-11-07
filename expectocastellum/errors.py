@@ -12,7 +12,7 @@ def no_ref_name(refname):
 def adding_room_to_parser_dict():
 	print "I'm not going to bother putting your room's name in the parser because your player will never need to refer to it."
 	
-def too_many_start_locations(room)
+def too_many_start_locations(room):
 	print "You have multiple rooms set as your player's starting room. Make sure that <roomobject>.start_location is set to True only once. Use <game>.start_location to view the list of rooms with start_location == True. For now, I'm starting your player off in %s." % room
 
 def no_start_location():

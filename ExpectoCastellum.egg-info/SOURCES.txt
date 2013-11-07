@@ -1,11 +1,12 @@
-README.txt
+MANIFEST.in
+README.md
 setup.py
 ExpectoCastellum.egg-info/PKG-INFO
 ExpectoCastellum.egg-info/SOURCES.txt
 ExpectoCastellum.egg-info/dependency_links.txt
-ExpectoCastellum.egg-info/requires.txt
 ExpectoCastellum.egg-info/top_level.txt
 expectocastellum/__init__.py
+expectocastellum/add_words.py
 expectocastellum/commands.py
 expectocastellum/dictionary.py
 expectocastellum/engine.py

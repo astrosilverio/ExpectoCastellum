@@ -6,11 +6,10 @@ with open('README.md') as file:
 setup(
 	author_email = 'astrosilverio@gmail.com',
 	name = 'ExpectoCastellum',
-	version = '0.1',
+	version = '0.5',
 	packages=['expectocastellum'],
 	license = '',
 	long_description = long_description,
-	install_requires = ['subprocess', 'json', 'os', 'random'],
 	classifiers = [
 	'Programming Language :: Python :: 2.7'
 	]

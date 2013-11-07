@@ -1,33 +1,24 @@
-from dictionary import *
+import dictionary
+import copy
 
-def add_directions(s):
+directions = copy.deepcopy(dictionary.directions)
+nouns = copy.deepcopy(dictionary.nouns)
+people = copy.deepcopy(dictionary.people)
+spells = copy.deepcopy(dictionary.spells)
+
+def add_direction(s):
 	if s not in directions:
 		directions.append(s)
 		target = open('dictionary.py', 'w')
 		target.truncate()
 		target.write('directions = ' + repr(directions) + '\n' +
-						'verbs = ' + repr(verbs) + '\n' +
 						'nouns = ' + repr(nouns) + '\n' +
 						'people = ' + repr(people) + '\n' +
-						'stops = ' + repr(stops) + '\n')
+						'spells = ' + repr(spells) + '\n')
 		target.close()
+		reload(dictionary)
 	else:
 		print "Already got it."	
-		
-		
-def add_verb(s):
-	if s not in verbs:
-		verbs.append(s)
-		target = open('dictionary.py', 'w')
-		target.truncate()
-		target.write('directions = ' + repr(directions) + '\n' +
-						'verbs = ' + repr(verbs) + '\n' +
-						'nouns = ' + repr(nouns) + '\n' +
-						'people = ' + repr(people) + '\n' +
-						'stops = ' + repr(stops) + '\n')
-		target.close()
-	else:
-		print "Already got it."
 		
 		
 def add_noun(s):
@@ -36,11 +27,11 @@ def add_noun(s):
 		target = open('dictionary.py', 'w')
 		target.truncate()
 		target.write('directions = ' + repr(directions) + '\n' +
-						'verbs = ' + repr(verbs) + '\n' +
 						'nouns = ' + repr(nouns) + '\n' +
 						'people = ' + repr(people) + '\n' +
-						'stops = ' + repr(stops) + '\n')
+						'spells = ' + repr(spells) + '\n')
 		target.close()
+		reload(dictionary)
 	else:
 		print "Already got it."
 		
@@ -51,26 +42,12 @@ def add_people(s):
 		target = open('dictionary.py', 'w')
 		target.truncate()
 		target.write('directions = ' + repr(directions) + '\n' +
-						'verbs = ' + repr(verbs) + '\n' +
 						'nouns = ' + repr(nouns) + '\n' +
 						'people = ' + repr(people) + '\n' +
-						'stops = ' + repr(stops) + '\n')
+						'spells = ' + repr(spells) + '\n')
 		target.close()
+		reload(dictionary)
 	else:
 		print "Already got it."
 		
-		
-def add_stop(s):
-	if s not in stops:
-		stops.append(s)
-		target = open('dictionary.py', 'w')
-		target.truncate()
-		target.write('directions = ' + repr(directions) + '\n' +
-						'verbs = ' + repr(verbs) + '\n' +
-						'nouns = ' + repr(nouns) + '\n' +
-						'people = ' + repr(people) + '\n' +
-						'stops = ' + repr(stops) + '\n')
-		target.close()
-	else:
-		print "Already got it."
 		
