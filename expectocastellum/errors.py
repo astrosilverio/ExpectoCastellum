@@ -7,7 +7,7 @@ def nameless_item(type):
 	return newname
 	
 def no_ref_name(refname):
-	print "You haven't specified your object's ref_name, the name by which you want the game's language processor to recognize this object. I'm setting it to %s, change it if you like with <object>.ref_name = 'YourPreferredName' and then save that change with <game>.save(). See the README for more details." 
+	print "You haven't specified your object's ref_name, the name by which you want the game's language processor to recognize this object. I'm setting it to %s, change it if you like with <object>.ref_name = 'YourPreferredName' and then save that change with <game>.save(). See the README for more details."  % refname
 	
 def adding_room_to_parser_dict():
 	print "I'm not going to bother putting your room's name in the parser because your player will never need to refer to it."

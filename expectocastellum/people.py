@@ -48,7 +48,7 @@ class Person(object):
 			print "You can't talk to a corpse."
 				
 	def talk_invisibly(self):
-		print "%s appears not to notice you." % self.name
+		print "%s appears not to notice you." % self.name.capitalize()
 		
 	def talk_visibly(self, player, room_object):		
 		if self.quest_item:
@@ -66,7 +66,7 @@ class Person(object):
 	
 	def talk_normally(self):
 		if self.dialogue == []:
-			print "%s has nothing to say." % self.name
+			print "%s has nothing to say." % self.name.capitalize()
 		elif self.count < len(self.dialogue):
 			print self.dialogue[self.count]
 			self.count += 1
@@ -83,10 +83,11 @@ def make_people_from_json(gamename):
 		for name, person_data in people.iteritems():
 			npclist[name] = Person()
 			npclist[name].__dict__.update(person_data)
-	except IOError:
+	except:
 		pass
-
-make_people_from_json("example")
+		
+npclist = {}
+#make_people_from_json("example")
  
 
 	

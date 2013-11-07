@@ -161,11 +161,8 @@ class Room(Scene):
 	def add_paths(self, paths):
 		self.paths.update(paths)
 		
-	def add_invent(self, things):
-		self.invent.extend(things)
-		
 	def add_people(self, people):
-		self.people.extend(people)
+		self.people.append(people)
 
 	def look(self, player):
 		
@@ -250,7 +247,8 @@ def make_rooms_from_json(gamename):
 			phonebook[name] = Room()
 			phonebook[name].__dict__.update(room_data)
 	except:
-		raise
+		pass
+phonebook = {}
 
-make_rooms_from_json('example')
+#make_rooms_from_json('example')
 	

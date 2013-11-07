@@ -6,6 +6,7 @@ import people
 import add_words
 import json
 import os
+import dictionary
 
 class Engine(object):
 
@@ -93,7 +94,7 @@ class Engine(object):
 		try:
 			with open(os.getcwd()+'/'+self.name+'/'+pathextend+'.json') as json_repo:
 				existing = json.load(json_repo)
-		except IOError:
+		except:
 			pass
 		for name, instance in dictname.iteritems():
 			if dictname == self.thingdict or dictname == self.npcdict:
@@ -136,6 +137,11 @@ class Engine(object):
 		return newnpc
 		
 	def play(self):
+		thesaurus.canonwords.extend([item for item in dictionary.directions if item not in thesaurus.canonwords])
+		thesaurus.canonwords.extend([item for item in dictionary.nouns if item not in thesaurus.canonwords])
+		thesaurus.canonwords.extend([item for item in dictionary.people if item not in thesaurus.canonwords])
+		thesaurus.canonwords.extend([item for item in dictionary.spells if item not in thesaurus.canonwords])
+		
 		self.start_location = [room.name for room in rooms.phonebook.values() if room.start_location]
 		if len(self.start_location) > 1:
 			errors.too_many_start_locations(self.start_location[0])

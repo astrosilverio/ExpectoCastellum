@@ -43,10 +43,11 @@ def make_things_from_json(gamename):
 		for name, thing_data in things.iteritems():
 			objectlist[name] = Thing()
 			objectlist[name].__dict__.update(thing_data)
-	except IOError:
+	except:
 		pass
-
-make_things_from_json("example")
+		
+objectlist = {}
+#make_things_from_json("example")
 
 
 

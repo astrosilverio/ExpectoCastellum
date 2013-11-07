@@ -17,8 +17,7 @@ def add_direction(s):
 						'spells = ' + repr(spells) + '\n')
 		target.close()
 		reload(dictionary)
-	else:
-		print "Already got it."	
+
 		
 		
 def add_noun(s):
@@ -32,8 +31,7 @@ def add_noun(s):
 						'spells = ' + repr(spells) + '\n')
 		target.close()
 		reload(dictionary)
-	else:
-		print "Already got it."
+
 		
 
 def add_people(s):
@@ -47,7 +45,5 @@ def add_people(s):
 						'spells = ' + repr(spells) + '\n')
 		target.close()
 		reload(dictionary)
-	else:
-		print "Already got it."
 		
 		

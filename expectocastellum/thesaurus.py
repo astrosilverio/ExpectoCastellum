@@ -18,7 +18,7 @@ noncanonicals = {'north': 'n', 'south': 's', 'west': 'w', 'east': 'e', 'northwes
 def process(user_input, player, gamename):
 
 	commands.name = gamename
-	commands.makemap()
+#	commands.makemap()
 	
 	if user_input.count('s') >= 11:
 		command = 'speak_parseltongue'
