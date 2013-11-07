@@ -30,8 +30,6 @@ Let's add some rooms to `test_game`. We can add a room in one of two ways:
 	
 **Both** methods are valid; `new_room` calls `new` with the first argument `'room'` and is present for convenience only. You can define attributes of your newly minted room with the optional arguments. **You must give your new rooms, things, and NPCs names**. This level of specification is necessary for how the engine stores its data. If you forget to give your room a name, the engine will call it `'newroom'` by default. Change the room's name and then use `test_game.update_game_dictionaries()` to ensure the room is stored properly. 
 
-Learn more about possible room attributes in the Rooms section.
-
 But wait! I forgot to add some attributes to my rooms. No worries! Both rooms are objects AND your engine keeps track of its rooms in the dictionary `self.roomdict` with `room.name` as the keys and `room` as the values. Therefore, **both** of the following are valid:
 
 	corridor.start_location = True
@@ -68,7 +66,7 @@ Let's make some things that you can pick up and do things with, and NPCs to inte
 	buffy = test_game.new_npc(name = 'Buffy', description = "Buffy is going through the motions (practice moves).")
 	
 	
-Again, you **must** define things and NPCS with names. `yourthing` and `yournpc` are stored respectively as `test_game.thingdict[yourthing.name] = yourthing` and `test_game.npcdict[yournpc.name] = yournpc`. If you forget the names, `test_game` will dub them `'newthing'` and `'newnpc'`. Once you change their names, call `test_game.update_game_dictionaries()`; that adds the appropriate keys and deletes the default `newthing` or `newnpc`. You can learn more about the attributes of the Thing() class in the Things section, and Person() class in the NPCs section.
+Again, you **must** define things and NPCS with names. `yourthing` and `yournpc` are stored respectively as `test_game.thingdict[yourthing.name] = yourthing` and `test_game.npcdict[yournpc.name] = yournpc`. If you forget the names, `test_game` will dub them `'newthing'` and `'newnpc'`. Once you change their names, call `test_game.update_game_dictionaries()`; that adds the appropriate keys and deletes the default `newthing` or `newnpc`.
 
 The locations of things are stored in the room objects, so to initially put your things in the map, add them to the rooms. Same goes for the NPCs:
 
@@ -93,7 +91,7 @@ Now, your game will be able to process inputs such as
 	> talk to marvin
 	> talk to Buffy
 	
-(In the third line, the parser doesn't recognize `'arc'` as a valid word, skips over it, and recognizes `'reactor'`...but more on the parser later!)
+(In the third line, the parser doesn't recognize `'arc'` as a valid word, skips over it, and recognizes `'reactor'`.)
 
 And that's how you create things and people and put them in your map!
 
@@ -116,6 +114,7 @@ Methods on Game Engine Objects
 * `save(self)`: calls `self.save_type` on each type of object.
 * `play(self)`
 
-Attributes of Room() class
-----------------------------
+Additional Information
+------------------------
 
+I can't face the prospect of describing the Room(), Thing(), Person() attributes right now, or how the parsing works. If you have questions, email me at astrosilverio@gmail.com or dig through the source code or wait until I have more time on my hands :)

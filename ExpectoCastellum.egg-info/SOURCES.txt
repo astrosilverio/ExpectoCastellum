@@ -3,5 +3,17 @@ setup.py
 ExpectoCastellum.egg-info/PKG-INFO
 ExpectoCastellum.egg-info/SOURCES.txt
 ExpectoCastellum.egg-info/dependency_links.txt
+ExpectoCastellum.egg-info/requires.txt
 ExpectoCastellum.egg-info/top_level.txt
 expectocastellum/__init__.py
+expectocastellum/commands.py
+expectocastellum/dictionary.py
+expectocastellum/engine.py
+expectocastellum/errors.py
+expectocastellum/help.py
+expectocastellum/people.py
+expectocastellum/quiz.py
+expectocastellum/rooms.py
+expectocastellum/spells.py
+expectocastellum/thesaurus.py
+expectocastellum/things.py

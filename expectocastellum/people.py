@@ -3,7 +3,7 @@ import os
 
 class Person(object):
 
-	def __init__(self, name=None, description=None, quest_item=None, quest_complete=None, reward=(), house_specific=None, out_house=()):
+	def __init__(self, name=None, description=None, quest_item=None, quest_complete=None, reward=(), house_specific=None, out_house=(), ref_name=None):
 		self.name = name
 		self.description = description
 		self.dialogue = []
@@ -14,6 +14,7 @@ class Person(object):
 		self.house_specific = house_specific
 		self.out_house = out_house
 		self.alive = True
+		self.ref_name = ref_name
 		
 	def setprops(self, **attrs):
 		if attrs is not None:
@@ -64,7 +65,9 @@ class Person(object):
 			self.talk_normally()
 	
 	def talk_normally(self):
-		if self.count < len(self.dialogue):
+		if self.dialogue == []:
+			print "%s has nothing to say." % self.name
+		elif self.count < len(self.dialogue):
 			print self.dialogue[self.count]
 			self.count += 1
 		else:

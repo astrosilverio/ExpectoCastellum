@@ -3,7 +3,7 @@ import os
 
 class Thing(object):
 
-	def __init__(self, name=None, description=None, grabbable=False, edible=False, taste=None, home=None, alive=False, dead_description=None, hidden=False, containing=[], detail=None, secret_detail=None):
+	def __init__(self, name=None, description=None, grabbable=False, edible=False, taste=None, home=None, alive=False, dead_description=None, hidden=False, containing=[], detail=None, secret_detail=None, ref_name=None):
 		self.name = name
 		self.description = description
 		self.detail = "You notice nothing of interest."
@@ -16,6 +16,7 @@ class Thing(object):
 		self.hidden = hidden
 		self.containing = containing
 		self.secret_detail = secret_detail
+		self.ref_name = ref_name
 
 	def setprops(self, **attrs):
 		if attrs is not None:

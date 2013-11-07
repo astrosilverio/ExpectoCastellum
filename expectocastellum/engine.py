@@ -3,6 +3,7 @@ import thesaurus
 import errors
 import things
 import people
+import add_words
 import json
 import os
 
@@ -33,7 +34,7 @@ class Engine(object):
 			to_build = people.Person()
 			dictname = self.npcdict
 		else:
-			errors.unknown_type_creation()
+			errors.unknown_type(type)
 			return
 	
 		if not attrs or 'name' not in attrs.keys():
@@ -41,30 +42,52 @@ class Engine(object):
 			
 		to_build.setprops(**attrs)
 		dictname[to_build.name] = to_build
+		
+		if (type.lower() == 'thing' or type.lower() == 'npc') and not to_build.ref_name:
+			defaultname = to_build.name.replace(' ','')
+			to_build.ref_name = defaultname
+			errors.no_ref_name(defaultname)
+		
 		self.save_type(type.lower())
 		
 		return to_build
+		
+	def update_game_dictionary(self,type):
+		if type.lower() == 'room':
+			dictname = self.roomdict
+		elif type.lower() == 'thing':
+			dictname = self.thingdict
+		elif type.lower() == 'npc'
+			dictname = self.npcdict
+		else:
+			errors.unknown_type()
+		for name, instance in dictname.iteritems():
+			if name != instance.name:
+				dictname[instance.name] = instance			
+				del dictname[name]
+	
+	def update_game_dictionaries(self):
+		self.update_game_dictionary('room')
+		self.update_game_dictionary('thing')
+		self.update_game_dictionary('npc')
 		
 	def save_type(self, type):	
 	
 		existing = dict()
 		
 		if type.lower() == 'room':
-			to_build = rooms.Room()
 			pathextend = 'rooms'
 			dictname = self.roomdict
 			if self.mirror_paths:
 				rooms.mirror_paths()
 		elif type.lower() == 'thing':
-			to_build = things.Thing()
 			pathextend = 'things'
 			dictname = self.thingdict
 		elif type.lower() == 'npc':
-			to_build = people.Person()
 			pathextend = 'people'
 			dictname = self.npcdict
 		else:
-			errors.unknown_type_creation()
+			errors.unknown_type()
 			return
 			
 		try:
@@ -73,6 +96,13 @@ class Engine(object):
 		except IOError:
 			pass
 		for name, instance in dictname.iteritems():
+			if dictname == self.thingdict or dictname == self.npcdict:
+				if not instance.ref_name:
+					defaultname=instance.name.replace(' ','')
+					instance.ref_name = defaultname
+					errors.no_ref_name(defaultname)
+				else:
+					self.parser_words_update(type, instance)
 			existing[name] = { k : v for k,v in instance.__dict__.iteritems() if v }
 		
 		with open(os.getcwd()+'/'+self.name+'/'+pathextend+'.json', 'w') as json_repo:
@@ -82,7 +112,17 @@ class Engine(object):
 		self.save_type('room')
 		self.save_type('thing')
 		self.save_type('npc')
-				
+	
+	def parser_words_update(self, type, gameobject):
+		if type.lower() == 'thing':
+			add_words.add_noun(gameobject.ref_name)
+		elif type.lower() == 'npc':
+			add_words.add_people(gameobject.ref_name)
+		elif type.lower() == 'room':
+			errors.adding_room_to_parser_dict()
+		else:
+			errors.unknown_type()
+	
 	def new_room(self, **attrs):
 		newroom = self.new('room',**attrs)
 		return newroom
@@ -98,7 +138,7 @@ class Engine(object):
 	def play(self):
 		self.start_location = [room.name for room in rooms.phonebook.values() if room.start_location]
 		if len(self.start_location) > 1:
-			errors.too_many_start_locations()
+			errors.too_many_start_locations(self.start_location[0])
 		elif self.start_location == '':
 			errors.no_start_location()
 		else:
