@@ -1,10 +1,10 @@
 from setuptools import setup
 
-with open('README.txt') as file:
+with open('README.md') as file:
 	long_description = file.read()
 	
 setup(
-	author_email = 'astrosilverio@gmail.com'
+	author_email = 'astrosilverio@gmail.com',
 	name = 'ExpectoCastellum',
 	version = '0.1',
 	packages=['expectocastellum'],
